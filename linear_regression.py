@@ -51,7 +51,7 @@ shared_x = shared(x_train)
 with pm.Model() as model:
 
     # Define priors
-    x_coeff = pm.Normal('x', 1.5, sd=20)                    # prior for coefficient of x
+    x_coeff = pm.Normal('x', 0, sd=20)                    # prior for coefficient of x
     intercept = pm.Normal('Intercept', 0, sd=20)            # prior for the intercept
 
     sigma = pm.HalfCauchy('sigma', beta=10, testval=1.)     # prior for the error term of due to the noise
@@ -69,10 +69,13 @@ with pm.Model() as model:
 # uses posterior predictive checks (PPC)
 shared_x.set_value(x_test)                                  # let's set the shared x to the test dataset
 ppc = pm.sample_ppc(trace, model=model, samples=1000)       # performs PPC
-predictions = ppc['y'].mean(axis=0)                                # compute the mean of the samples draws from each new y
+predictions = ppc['y'].mean(axis=0)                         # compute the mean of the samples draws from each new y
 
 # now you can check the error
 print("MSE of simple linear regression using bayesian : {0}".format(mean_squared_error(y_test, predictions)))
+
+# plot the traceplot
+pm.traceplot(trace)
 
 # let's plot the regression lines
 fig = plt.figure(figsize=(5, 5))
