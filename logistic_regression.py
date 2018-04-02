@@ -87,7 +87,7 @@ predictions = ppc['y'].mean(axis=0)                         # compute the mean o
 
 predictions = predictions >= 0.5
 # now you can check the error
-print("MSE of simple linear regression using bayesian : {0}".format(accuracy_score(y_test, predictions)))
+print("Accuracy of logistic regression using bayesian : {0}".format(accuracy_score(y_test, predictions)))
 
 # plot the traceplot
 pm.traceplot(trace)
