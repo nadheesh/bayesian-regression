@@ -21,7 +21,7 @@ import numpy as np
 import pymc3 as pm
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-from theano import shared
+from theano import shared, tensor as tt
 
 size = 100  # no of data samples
 true_intercept = 0.5  # intercept of the regression line
@@ -53,7 +53,7 @@ with pm.Model() as model:
     intercept = pm.Normal('Intercept', 0, sd=20)  # prior for the intercept
     sigma = pm.HalfCauchy('sigma', beta=10)  # prior for the error term of due to the noise
 
-    mu = intercept + x_coeff * shared_x  # represent the linear regression relationship
+    mu = intercept + tt.dot(shared_x, x_coeff)  # represent the linear regression relationship
 
     # Define likelihood
     likelihood = pm.Normal('y', mu=mu, sd=sigma, observed=y_train)
