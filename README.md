@@ -26,4 +26,5 @@ The feature relevance can be retrieved as follows.
 Notice that if `is_MAP` is set to `True` then this method will return only the scores. However, if MCMC sampling used, then the uncertainty of the ARD scores will be returned with the scores as follows.
 
     model = BayesianGPRegression(is_MAP=False)
+    model.fit(X, y)
     ard_scores, ard_uncertainty = model.ard_coefficients()
