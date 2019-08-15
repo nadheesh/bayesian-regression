@@ -17,6 +17,9 @@ Copyright 2019 Nadheesh Jihan
 import numpy as np
 import pymc3 as pm
 
+seed = 42
+np.random.seed(seed)
+
 class BayesianGPRegression:
 
     def __init__(self, is_MAP=True):
